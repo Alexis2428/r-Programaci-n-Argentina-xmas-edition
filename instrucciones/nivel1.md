@@ -20,8 +20,8 @@ Validación de un formulario
 =================
 * Validación del lado del cliente:
 
-Las validaciones de los inputs son esenciales para cualquier formulario web ya que ayuda a que el visitante
-envíe los datos correctos. Sirven tanto por una cuestión de seguridad como una cuestión de usabilidad.
+Las validaciones de los inputs son esenciales para cualquier formulario web ya que ayuda a que el visitante envíe los datos correctos.
+Sirven tanto por una cuestión de seguridad como una cuestión de usabilidad.
 
 Las validaciones de los formularios del lado del cliente se escriben en JavaScript.
 
@@ -74,10 +74,9 @@ Para validar nuestro formulario, vamos a tener  que hacer lo siguiente:
   'Este campo debe tener menos de 50 caracteres'
 
 
-  Ahora vamos a hacer una validación más interesante.
-  Queremos que nuestro nombre contenga sólo letras.
-  Pero cómo podemos validar esto? Con una herramienta que se llama
-  Regular Expressions (Expresiones Regulares), abreviado RegEx o RegExp.
+  Ahora vamos a hacer una validación más interesante. Queremos que nuestro nombre contenga sólo letras.
+  Pero cómo podemos validar esto? Con una herramienta que se llama Regular Expressions (Expresiones Regulares),
+  abreviado RegEx o RegExp.
   
   Una expresión regular es un objeto que describe un patrón de caracteres.
   
@@ -102,7 +101,7 @@ Para validar nuestro formulario, vamos a tener  que hacer lo siguiente:
 
   Esto va a retornar un booleano. True si sólo contiene letras o false si no contiene sólo letras.
 
-  TODO: Agregar la validación para que sólo tenga letras.  
+  TODO: Agregar la validación para que sólo tenga letras.
   TODO: Escribir una prueba
 
 3.Enviando (submit) el formulario
@@ -133,11 +132,9 @@ Por qué no se cambia? Por algo llamado backwards compatibility, o compatibilida
 TODO original:
 1. In `index.html` add `event` as an argument for the `validateForm` function.
 2. In your javascript file add `event` as an argument to the `validateForm` function.
-3. Inside of the `validateForm` function call:
-`event.preventDefault();`
+3. Inside of the `validateForm` function call: `event.preventDefault();`
 
 TODO posta:
-
 1. Agregar `event` como parámetro de la función onsubmit,
 2. y hacer `event.preventDefault()`.
 
@@ -148,15 +145,13 @@ Y ahora debería funcionar.
 5.Éxito o Errores
 ===================
     
-  Creemos un manejador de errores que se encargue de mostrar los errores
-  del formulario, o nos muestre un mensaje de éxito. 
+  Creemos un manejador de errores que se encargue de mostrar los errores del formulario, o nos muestre un mensaje de éxito.
   
   TODO:
   1. Crear una función `manejarErrores ` que tome 1 argumento `errores`.
-  2. Agregar un chequeo en esta función que diga que si no tenemos errores,
-  imprima `console.log('éxito')` y si no, que haga un `console.log` de los errores.
-  3. Reemplazar el console.log de validarNombre y en vez de eso,
-  llamar a la función `manejarErrores` con un array de errores.
+  2. Agregar un chequeo en esta función que diga que si no tenemos errores, imprima `console.log('éxito')` y
+  si no, que haga un `console.log` de los errores.
+  3. Reemplazar el console.log de validarNombre y en vez de eso, llamar a la función `manejarErrores` con un array de errores.
 
 
 // Acá hacemos un parate y vemos una intro a objetos.
@@ -175,8 +170,7 @@ Y ahora debería funcionar.
 
   Se puede usar `[A-z0-9]` para validar que sólo haya letras y números.
   
-  3. En `validarForm` vamos a crear un objeto que represente los errores
-  de nuestro formulario por cada  campo.
+  3. En `validarForm` vamos a crear un objeto que represente los errores de nuestro formulario por cada  campo.
   
   ```
   const errores = {
@@ -184,7 +178,7 @@ Y ahora debería funcionar.
   };
   ```
 
-  4. Ahoral o mismo para `ciudad` y `descripcion-regalo`
+  4. Ahora lo mismo para `ciudad` y `descripcion-regalo`
 
 Atención: No se olviden de la `,` para separar múltiples valores.
 
@@ -194,11 +188,9 @@ Atención: No se olviden de la `,` para separar múltiples valores.
     ciudad: validarCiudad(ciudad)
   };
   ```
-   
-  Ahora para ver si tenemos algún error en `handleErrors`,
-  vamos a chequear si hay errores de manera diferente.
-  tenemos que iterar por cada par de llave-valor (key-value pair) del objeto
-  de errores.
+
+  Ahora para ver si tenemos algún error en `handleErrors`, vamos a chequear si hay errores de manera diferente.
+  tenemos que iterar por cada par de llave-valor (key-value pair) del objeto de errores.
   
   5. Verificamos si hay errores con un acumulador.
   
@@ -206,7 +198,7 @@ Atención: No se olviden de la `,` para separar múltiples valores.
   let cuentaErrores = 0;
   ```
   
-  6. Verificamos si hay un error en `nombr`e
+  6. Verificamos si hay un error en `nombre`
   
   ```
   if (errores.nombre) {
@@ -217,8 +209,7 @@ Atención: No se olviden de la `,` para separar múltiples valores.
   }
   ```
   
-  7. Al final de la verificación, si `cuentaErrores` sigue siendo 0,
-  no hay errores. Si es mayor a 0, hay errores.
+  7. Al final de la verificación, si `cuentaErrores` sigue siendo 0, no hay errores. Si es mayor a 0, hay errores.
    
   8. TODO: Hacer lo mismo con `ciudad` y `descripcion-regalo`.
   
@@ -226,19 +217,16 @@ Atención: No se olviden de la `,` para separar múltiples valores.
 7.Objeto, forEach, funciones de callback.
 ===========================
 
-Como vemos, es insostenible tener que agregar un chequeo por cada
-campo nuevo. Imagínense un formulario con 100 campos.
+Como vemos, es insostenible tener que agregar un chequeo por cada campo nuevo. Imagínense un formulario con 100 campos.
 
 Ahora que ya está funcionando nuestro código, vamos a hacerle un refactor.
-Refactor significa dejar todo funcionando como está, pero cambiando el código
-que corre por detrás.
+Refactor significa dejar todo funcionando como está, pero cambiando el código que corre por detrás.
 
 El método `forEach` lo podemos ver [en MDN directamente](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach).
   
   TODO:
   //Explicar por qué un array no estaría tan bueno en este caso
-  1. Los objetos tienen llaves (keys). Uno puede iterar por esas llaves  
-  usando forEach:
+  1. Los objetos tienen llaves (keys). Uno puede iterar por esas llaves usando forEach:
   
   ```
   Object.keys(errores).forEach(function (key) {
@@ -253,17 +241,14 @@ El método `forEach` lo podemos ver [en MDN directamente](https://developer.mozi
 8.Interacción con los errores
 ================================
 
-  Ahora agreguemos un poco de interactividad a nuestra interfaz de usuario
-  porque al momento sólo sabemos de los errores por lo que podemos ver 
-  en la consola.
+  Ahora agreguemos un poco de interactividad a nuestra interfaz de usuario porque al momento sólo sabemos de los errores
+  por lo que podemos ver en la consola.
 
-  Vamos a hacer los campos que tienen errores que queden en rojo,
-  agregándole la clase `error` que existe en `index.css`. Hace que el
-  borde sea rojo.  
-   
+  Vamos a hacer los campos que tienen errores que queden en rojo, agregándole la clase `error` que existe en `index.css`.
+  Hace que el borde sea rojo.
+
   TODO:
-  1. Vamos a usar querySelector para agarrar al elemento que tenga
-  el mismo nombre que cada llave del objeto que tenga errores.
+  1. Vamos a usar querySelector para agarrar al elemento que tenga el mismo nombre que cada llave del objeto que tenga errores.
 
   ```
   document.querySelector(`[name="${key}"]`)
@@ -272,14 +257,12 @@ El método `forEach` lo podemos ver [en MDN directamente](https://developer.mozi
   2. Le vamos a agregar la clase error usando `className` o `classList`
   
   3. Cada vez que haya un error, vamos a limpiar el valor del texto.
-    
+
   4. Cuando no haya error, vamos a limpiar los errores.
   
-  5. Finalmente, vamos a agregar los errores dentro del contendor `#errores`
-  creando un <li> por cada uno.
+  5. Finalmente, vamos a agregar los errores dentro del contenedor `#errores` creando un <li> por cada uno.
   
-  6. Podemos borrar los `console.log` que haya porque ya tenemos la funcionalidad
-  hecha como debe ser.
+  6. Podemos borrar los `console.log` que haya porque ya tenemos la funcionalidad hecha como debe ser.
   
   P.D.: Siempre es bueno limpiar los console.log del código.
 
@@ -288,13 +271,12 @@ El método `forEach` lo podemos ver [en MDN directamente](https://developer.mozi
 ~~===================================~~
 
   Ahora, qué pasa si todo fue bien?
-   
+
   1. Vamos a esconder el formulario
   2. Vamos a mostrar el elemento con id `#exito` //explicar esta técnica
-  
+
 TAREA:
-  3. En 5 segundos vamos redireccionar al usuario a `wishlist.html`,
-  usando `setTimeout` y `window.location.href`.
+  3. En 5 segundos vamos a redireccionar al usuario a `wishlist.html`, usando `setTimeout` y `window.location.href`.
 
 
 //////////////////////////////////////////////////////////////////////////////////
