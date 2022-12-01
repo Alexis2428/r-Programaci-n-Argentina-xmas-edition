@@ -1,21 +1,11 @@
-const $formulario = document.formulario;
-
-const nombre = $formulario.nombre.value;
-const ciudad = $formulario.ciudad.value;
-const comportamiento = $formulario.comportamiento.value;
-const descripcionRegalo = $formulario['descripcion-regalo'].value;
-
-// console.log(ciudad);
-// console.log(comportamiento);
-// console.log(descripcionRegalo);
-
 function validarNombre (nombre) {
     if (0 === nombre.length) {
-        return 'Este campo debe tener al menos 1 caracter';
+        return 'El campo nombre debe tener al menos 1 caracter';
     }
 
     if (50 <= nombre.length) {
-        return 'Este campo debe tener menos de 50 caracteres';
+        return 'El campo nombre debe tener menos de 50 caracteres';
+    }
     }
 
     return '';
@@ -23,7 +13,7 @@ function validarNombre (nombre) {
 
 function validarCiudad(ciudad) {
     if ('' === ciudad) {
-        return 'Debe seleccionar una opción';
+        return 'El campo ciudad no debe estar vacio';
     }
 
     return '';
@@ -31,12 +21,16 @@ function validarCiudad(ciudad) {
 
 function validarDescripcionRegalo(descripcionRegalo) {
     if (0 === descripcionRegalo.length) {
-        return 'Este campo debe tener al menos 1 caracter';
+        return 'El campo descripcionRegalo no debe estar vacio';
     }
 
-    if (50 <= descripcionRegalo.length) {
-        return 'Este campo debe tener menos de 50 caracteres';
+    if (100 <= descripcionRegalo.length) {
+        return 'El campo descripcionRegalo debe tener menos de 100 caracteres';
+    }
     }
 
     return '';
 }
+
+const $form = document.formulario;
+$form.onsubmit = validarFormulario;
