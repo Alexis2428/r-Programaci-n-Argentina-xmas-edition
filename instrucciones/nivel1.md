@@ -144,11 +144,11 @@ Y ahora debería funcionar.
 
 5.Éxito o Errores
 ===================
-    
+
   Creemos un manejador de errores que se encargue de mostrar los errores del formulario, o nos muestre un mensaje de éxito.
   
   TODO:
-  1. Crear una función `manejarErrores ` que tome 1 argumento `errores`.
+  1. Crear una función `manejarErrores` que tome 1 argumento `errores`.
   2. Agregar un chequeo en esta función que diga que si no tenemos errores, imprima `console.log('éxito')` y
   si no, que haga un `console.log` de los errores.
   3. Reemplazar el console.log de validarNombre y en vez de eso, llamar a la función `manejarErrores` con un array de errores.
@@ -189,7 +189,7 @@ Atención: No se olviden de la `,` para separar múltiples valores.
   };
   ```
 
-  Ahora para ver si tenemos algún error en `handleErrors`, vamos a chequear si hay errores de manera diferente.
+  Ahora para ver si tenemos algún error en `manejarErrores`, vamos a chequear si hay errores de manera diferente.
   tenemos que iterar por cada par de llave-valor (key-value pair) del objeto de errores.
   
   5. Verificamos si hay errores con un acumulador.
@@ -210,7 +210,7 @@ Atención: No se olviden de la `,` para separar múltiples valores.
   ```
   
   7. Al final de la verificación, si `cuentaErrores` sigue siendo 0, no hay errores. Si es mayor a 0, hay errores.
-   
+
   8. TODO: Hacer lo mismo con `ciudad` y `descripcion-regalo`.
   
   
@@ -273,7 +273,7 @@ El método `forEach` lo podemos ver [en MDN directamente](https://developer.mozi
   Ahora, qué pasa si todo fue bien?
 
   1. Vamos a esconder el formulario
-  2. Vamos a mostrar el elemento con id `#exito` //explicar esta técnica
+  2. Vamos a mostrar el elemento con id `#exito` // explicar esta técnica
 
 TAREA:
   3. En 5 segundos vamos a redireccionar al usuario a `wishlist.html`, usando `setTimeout` y `window.location.href`.
