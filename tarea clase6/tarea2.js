@@ -73,6 +73,10 @@ function validarSalario(salario) {
         return 'El campo salario no debe estar vacio';
     }
 
+    if (!/^[0-9]+[\.,]*[0-9]{0,2}$/.test(salario)) {
+        return 'El campo salario solo admite hasta 2 decimales';
+    }
+
     return '';
 }
 
