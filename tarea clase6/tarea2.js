@@ -28,13 +28,10 @@ function borrarIntegrantes() {
     }
 }
 
-function obtenerSalarios() {
-    const $listaSalarios = document.querySelectorAll('.integrante input');
+function obtenerSalarios($listaSalarios) {
     const salarios = [];
     for (let i = 0; i < $listaSalarios.length; i++) {
-        if ('' !== $listaSalarios[i].value) {
-            salarios.push(Number($listaSalarios[i].value));
-        }
+        salarios.push(Number($listaSalarios[i].value));
     }
     return salarios;
 }
@@ -67,7 +64,31 @@ function ocultarBotonReiniciar() {
     document.querySelector('#reiniciar').className = 'oculto';
 }
 
+function validarSalarios(event) {
+    event.preventDefault();
     
+    const errores = {};
+    const $salarios = document.querySelectorAll('.integrante input');
+
+    for (let i = 0; i < $salarios.length; i++) {
+        errores[i] = validarSalario($salarios[i].value);
+    }
+
+    const sonValidos = 0 === manejarErrores(errores, $salarios);
+
+    if (sonValidos) {
+        const salarios = obtenerSalarios($salarios);
+        
+        obtenerRespuesta('mayor', obtenerNumeroMayor(salarios));
+        obtenerRespuesta('menor', obtenerNumeroMenor(salarios));
+        obtenerRespuesta('promedio', obtenerPromedio(salarios).toFixed(2));
+        obtenerRespuesta('mensual-promedio', (obtenerPromedio(salarios) / 12).toFixed(2));
+
+        mostrarRespuestas();
+        mostrarBotonReiniciar();
+    }
+}
+
 function validarSalario(salario) {
     if ('' === salario) {
         return 'El campo salario no debe estar vacio';
@@ -78,6 +99,69 @@ function validarSalario(salario) {
     }
 
     return '';
+}
+
+function manejarErrores(errores, $salarios) {
+    let cantidadErrores = 0;
+
+    Object.keys(errores).forEach(function(key){
+        const error = errores[key];
+
+        if (error) {
+            cantidadErrores++;
+            $salarios[key].className = 'error';
+            
+            if (!comprobarExisteError(error)) {
+                crearError(error);
+            }
+
+        } else {
+            $salarios[key].className = '';
+        }
+    })
+
+    const $listaErrores = document.querySelectorAll('#errores li');
+    borrarErroresCorregidos(errores, $listaErrores);
+
+    return cantidadErrores;
+}
+
+function comprobarExisteError (error) {
+    const $listaErrores = document.querySelectorAll('#errores li');
+
+    for (let i = 0; i < $listaErrores.length; i++) {
+        if (error === $listaErrores[i].innerText) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function crearError(error) {
+    const $error = document.createElement('li');
+    $error.innerText = error;
+
+    document.querySelector('#errores').appendChild($error);
+}
+
+function borrarErroresCorregidos(errores, $listaErrores) {
+    const valorErrores = Object.values(errores);
+
+    for (let i = 0; i < $listaErrores.length; i++) {
+        let existeError = false;
+
+        for (let j = 0; j < valorErrores.length; j++) {
+            if ($listaErrores[i].innerText === valorErrores[j]) {
+                existeError = true;
+                break;
+            }
+        }
+
+        if (!existeError) {
+            $listaErrores[i].remove();
+        }
+    }
 }
 
 const $botonAgregar = document.querySelector('#agregar');
