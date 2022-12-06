@@ -1,48 +1,3 @@
-/* TAREA:
-Crear una interfaz que permita agregar ó quitar (botones agregar y quitar) inputs+labels para completar el salario anual 
-de cada integrante de la familia que trabaje.
-Al hacer click en "calcular", mostrar en un elemento pre-existente el mayor salario anual, menor salario anual, 
-salario anual promedio y salario mensual promedio.
-Punto bonus: si hay inputs vacíos, ignorarlos en el cálculo (no contarlos como 0).
-*/
-
-const $botonAgregar = document.querySelector('#agregar');
-$botonAgregar.onclick = function () {
-    agregarIntegrante();
-    mostrarBotonCalcular();
-}
-
-const $botonQuitar = document.querySelector('#quitar');
-$botonQuitar.onclick = borrarUltimoIntegrante;
-
-const $botonCalcular = document.querySelector('#calcular');
-$botonCalcular.onclick = function (event) {
-    event.preventDefault();
-
-    const salarios = obtenerSalarios();
-
-    if ('' === validarSalarios(salarios)) {
-        obtenerRespuesta('mayor', obtenerNumeroMayor(salarios));
-        obtenerRespuesta('menor', obtenerNumeroMenor(salarios));
-        obtenerRespuesta('promedio', obtenerPromedio(salarios).toFixed(2));
-        obtenerRespuesta('mensual-promedio', (obtenerPromedio(salarios) / 12).toFixed(2));
-
-        mostrarRespuestas();
-        mostrarBotonReiniciar();
-    } else {
-        alert(validarSalarios(salarios));
-    }
-}
-
-const $botonReiniciar = document.querySelector('#reiniciar');
-$botonReiniciar.onclick = function () {
-    borrarIntegrantes();
-    ocultarBotonCalcular();
-    ocultarRespuestas();
-    ocultarBotonReiniciar();
-}
-
-
 function agregarIntegrante() {
     const $texto = document.createElement('label');
     $texto.textContent = 'Ingrese el salario anual ';
@@ -85,7 +40,7 @@ function obtenerSalarios() {
 }
 
 function obtenerRespuesta(tipo, valor) {
-    document.querySelector(`#salario-${tipo}`).textContent = valor;
+    document.querySelector(`#salario-${tipo}`).innerText = valor;
 }
 
 function mostrarBotonCalcular() {
@@ -112,10 +67,31 @@ function ocultarBotonReiniciar() {
     document.querySelector('#reiniciar').className = 'oculto';
 }
 
-function validarSalarios(salarios) {
-    if (0 === salarios.length) {
-        return 'Debe ingresar un salario para operar';
-    }
     
+function validarSalario(salario) {
+    if ('' === salario) {
+        return 'El campo salario no debe estar vacio';
+    }
+
     return '';
+}
+
+const $botonAgregar = document.querySelector('#agregar');
+$botonAgregar.onclick = function () {
+    agregarIntegrante();
+    mostrarBotonCalcular();
+}
+
+const $botonQuitar = document.querySelector('#quitar');
+$botonQuitar.onclick = borrarUltimoIntegrante;
+
+const $botonCalcular = document.querySelector('#calcular');
+$botonCalcular.onclick = validarSalarios;
+
+const $botonReiniciar = document.querySelector('#reiniciar');
+$botonReiniciar.onclick = function () {
+    borrarIntegrantes();
+    ocultarBotonCalcular();
+    ocultarRespuestas();
+    ocultarBotonReiniciar();
 }

@@ -1,8 +1,8 @@
-function probarValidarSalarios() {
+function probarValidarSalario() {
     console.assert(
-        validarSalarios([]) === 'Debe ingresar un salario para operar',
-        'Validar salarios no validó que no se ingresó ningun salario',
+        validarSalario('') === 'El campo salario no debe estar vacio',
+        'validarSalario no validó que no se ingresó ningun salario'
     );
 }
 
-probarValidarSalarios();
+probarValidarSalario();
