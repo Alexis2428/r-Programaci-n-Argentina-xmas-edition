@@ -78,6 +78,14 @@ function validarEdad(edad) {
         return 'El campo edad no puede estar vacio';
     }
 
+    if (!/^[0-9]+$/.test(edad)) {
+        return 'El campo edad solo admite números enteros';
+    }
+
+    if (!/^[0-9]{1,3}$/.test(edad)) {
+        return 'El campo edad solo admite edades validas (entre 1 y 3 caracteres)'
+    }
+
     return '';
 }
 
