@@ -33,13 +33,10 @@ function crearIntegrante(indice) {
     $integrantes.appendChild($integrante);
 }
 
-function obtenerEdades() {
-    const listaEdades = document.querySelectorAll('.integrante input');
+function obtenerEdades($listaEdades) {
     const edades = [];
-    for (let i = 0; i < listaEdades.length; i++) {
-        if ('' !== listaEdades[i].value) {
-            edades.push(Number(listaEdades[i].value));
-        }
+    for (let i = 0; i < $listaEdades.length; i++) {
+        edades.push(Number($listaEdades[i].value));
     }
     return edades;
 }
@@ -72,7 +69,18 @@ function ocultarRespuestas() {
     document.querySelector('#respuestas').className = 'oculto';
 }
 
-function validarEdades(edades) {
+function validarEdades($edades) {
+    const errores = {};
+
+    for (let i = 0; i < $edades.length; i++) {
+        errores[i] = validarEdad($edades[i].value);
+    }
+
+    const sonValidas = 0 === manejarErrores(errores, $edades);
+
+    return sonValidas;
+}
+
 function validarEdad(edad) {
     if ('' === edad) {
         return 'El campo edad no puede estar vacio';
@@ -87,6 +95,69 @@ function validarEdad(edad) {
     }
 
     return '';
+}
+
+function manejarErrores(errores, $edades) {
+    let cantidadErrores = 0;
+
+    Object.keys(errores).forEach(function (key) {
+        const error = errores[key];
+
+        if (error) {
+            cantidadErrores++;
+            $edades[key].className = 'error';
+
+            if (!comprobarExisteError(error)) {
+                crearError(error);
+            }
+
+        } else {
+            $edades[key].className = '';
+        }
+    })
+
+    borrarErroresCorregidos(errores);
+
+    return cantidadErrores;
+}
+
+function comprobarExisteError(error) {
+    const $errores = document.querySelectorAll('#errores li');
+
+    for (let i = 0; i < $errores.length; i++) {
+        if (error === $errores[i].innerText) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function crearError(error) {
+    const $error = document.createElement('li');
+    $error.innerText = error;
+
+    document.querySelector('#errores').appendChild($error);
+}
+
+function borrarErroresCorregidos(errores) {
+    const valorErrores = Object.values(errores);
+    const $errores = document.querySelectorAll('#errores li');
+
+    for (let i = 0; i < $errores.length; i++) {
+        let existeError = false;
+
+        for (let j = 0; j < valorErrores.length; j++) {
+            if ($errores[i].innerText === valorErrores[j]) {
+                existeError = true;
+                break;
+            }
+        }
+
+        if (!existeError) {
+            $errores[i].remove();
+        }
+    }
 }
 
 
