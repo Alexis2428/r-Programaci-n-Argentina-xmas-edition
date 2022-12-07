@@ -1,8 +1,8 @@
-function probarValidarEdades() {
+function probarValidarEdad() {
     console.assert(
-        validarEdades([]) === 'Debe ingresar una edad antes de operar',
-        'Validar edades no validó que no se ingresó una edad',
-    )
+        validarEdad('') === 'El campo edad no puede estar vacio',
+        'validarEdad no validó que no se ingresó una edad'
+    );
 }
 
-probarValidarEdades();
+probarValidarEdad();
