@@ -20,6 +20,22 @@ function probarValidarEdad() {
     );
 }
 
+function probarValidarNumero() {
+    console.assert(
+        validarNumero('') === 'El campo cantidad-integrantes no debe estar vacio',
+        'validarNumero no validó que no se ingresó ningún número'
+    );
+
+    console.assert(
+        validarNumero('5,5') === 'El campo cantidad-integrantes solo acepta números enteros',
+        'validarNumero no validó que el número no sea entero'
+    );
+
+    console.assert(
+        validarNumero('5') === '',
+        'validarNumero no funcionó con un número valido'
+    );
 }
 
 probarValidarEdad();
+probarValidarNumero();

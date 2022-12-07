@@ -5,8 +5,7 @@ function borrarIntegrantesAnteriores() {
     }
 }
 
-function crearIntegrantes() {
-    const cantidadIntegrantes = Number(document.querySelector('#cantidad-integrantes').value);
+function crearIntegrantes(cantidadIntegrantes) {
 
     if (0 < cantidadIntegrantes) {
         mostrarBotonCalcular();
@@ -160,13 +159,63 @@ function borrarErroresCorregidos(errores) {
     }
 }
 
+function validarCantidadIntegrantes($cantidadIntegrantes) {
+    const error = validarNumero($cantidadIntegrantes.value);
+
+    const esValido = manejarError(error, $cantidadIntegrantes);
+
+    return esValido;
+}
+
+function validarNumero(cantidadIntegrantes) {
+    if ('' === cantidadIntegrantes) {
+        return 'El campo cantidad-integrantes no debe estar vacio';
+    }
+
+    if (!/^[0-9]+$/.test(cantidadIntegrantes)) {
+        return 'El campo cantidad-integrantes solo acepta números enteros';
+    }
+
+    return '';
+}
+
+function manejarError(error, $cantidadIntegrantes) {
+    let noHayError = true;
+
+    if (error) {
+        noHayError = false;
+        $cantidadIntegrantes.className = 'error';
+
+        if (!comprobarExisteError(error)) {
+            crearError(error);
+        }
+
+    } else {
+        $cantidadIntegrantes.className = '';
+    }
+
+    const $errores = document.querySelectorAll('#errores li');
+
+    for (let j = 0; j < $errores.length; j++) {
+        if ($errores[j].innerText != error) {
+            $errores[j].remove();
+            break;
+        }
+    }
+
+    return noHayError;
+}
 
 const $botonContinuar = document.querySelector('#continuar');
 $botonContinuar.onclick = function (event) {
     event.preventDefault();
 
+    const $cantidadIntegrantes = (document.querySelector('#cantidad-integrantes'));
+
+    if (validarCantidadIntegrantes($cantidadIntegrantes)) {
         borrarIntegrantesAnteriores();
         crearIntegrantes(Number($cantidadIntegrantes.value));
+    }
 }
 
 const $botonCalcular = document.querySelector('#calcular');
