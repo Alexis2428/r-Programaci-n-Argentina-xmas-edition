@@ -7,10 +7,6 @@ function borrarIntegrantesAnteriores() {
 
 function crearIntegrantes(cantidadIntegrantes) {
 
-    if (0 < cantidadIntegrantes) {
-        mostrarBotonCalcular();
-    }
-
     for (let i = 0; i < cantidadIntegrantes; i++) {
         crearIntegrante(i);
     };
@@ -206,15 +202,30 @@ function manejarError(error, $cantidadIntegrantes) {
     return noHayError;
 }
 
+function borrarErroresAnteriores() {
+    const $errores = document.querySelectorAll('#errores li');
+
+    for (let i = 0; i < $errores.length; i++) {
+        $errores[i].remove();
+    }
+}
+
 const $botonContinuar = document.querySelector('#continuar');
 $botonContinuar.onclick = function (event) {
     event.preventDefault();
 
+    borrarIntegrantesAnteriores();
+    borrarErroresAnteriores();
+
     const $cantidadIntegrantes = (document.querySelector('#cantidad-integrantes'));
 
     if (validarCantidadIntegrantes($cantidadIntegrantes)) {
-        borrarIntegrantesAnteriores();
         crearIntegrantes(Number($cantidadIntegrantes.value));
+        mostrarBotonCalcular();
+
+    } else {
+        ocultarRespuestas();
+        ocultarBotonCalcular();
     }
 }
 
@@ -233,12 +244,18 @@ $botonCalcular.onclick = function (event) {
         obtenerRespuesta('promedio', obtenerPromedio(edades).toFixed(1));
         mostrarRespuestas();
         mostrarBotonReiniciar();
+        
+    } else {
+        ocultarRespuestas();
     }
 }
 
 const $botonReiniciar = document.querySelector('#reiniciar');
 $botonReiniciar.onclick = function () {
     borrarIntegrantesAnteriores();
+    borrarErroresAnteriores();
+    document.querySelector('#cantidad-integrantes').className = '';
+
     ocultarRespuestas();
     ocultarBotonCalcular();
     ocultarBotonReiniciar();
