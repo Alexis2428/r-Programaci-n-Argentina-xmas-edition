@@ -64,11 +64,8 @@ function ocultarBotonReiniciar() {
     document.querySelector('#reiniciar').className = 'oculto';
 }
 
-function validarSalarios(event) {
-    event.preventDefault();
-    
+function validarSalarios($salarios) {
     const errores = {};
-    const $salarios = document.querySelectorAll('.integrante input');
 
     for (let i = 0; i < $salarios.length; i++) {
         errores[i] = validarSalario($salarios[i].value);
@@ -76,17 +73,7 @@ function validarSalarios(event) {
 
     const sonValidos = 0 === manejarErrores(errores, $salarios);
 
-    if (sonValidos) {
-        const salarios = obtenerSalarios($salarios);
-        
-        obtenerRespuesta('mayor', obtenerNumeroMayor(salarios));
-        obtenerRespuesta('menor', obtenerNumeroMenor(salarios));
-        obtenerRespuesta('promedio', obtenerPromedio(salarios).toFixed(2));
-        obtenerRespuesta('mensual-promedio', (obtenerPromedio(salarios) / 12).toFixed(2));
-
-        mostrarRespuestas();
-        mostrarBotonReiniciar();
-    }
+    return sonValidos;
 }
 
 function validarSalario(salario) {
@@ -164,6 +151,14 @@ function borrarErroresCorregidos(errores, $listaErrores) {
     }
 }
 
+function borrarErroresAnteriores() {
+    const $errores = document.querySelectorAll('#errores li');
+
+    for (let i = 0; i < $errores.length; i++) {
+        $errores[i].remove();
+    }
+}
+
 const $botonAgregar = document.querySelector('#agregar');
 $botonAgregar.onclick = function () {
     agregarIntegrante();
@@ -174,11 +169,33 @@ const $botonQuitar = document.querySelector('#quitar');
 $botonQuitar.onclick = borrarUltimoIntegrante;
 
 const $botonCalcular = document.querySelector('#calcular');
-$botonCalcular.onclick = validarSalarios;
+$botonCalcular.onclick = function(event) {
+    event.preventDefault();
+    
+    const $salarios = document.querySelectorAll('.integrante input');
+
+    const sonValidos = validarSalarios($salarios)
+
+    if (sonValidos) {
+        const salarios = obtenerSalarios($salarios);
+        
+        obtenerRespuesta('mayor', obtenerNumeroMayor(salarios));
+        obtenerRespuesta('menor', obtenerNumeroMenor(salarios));
+        obtenerRespuesta('promedio', obtenerPromedio(salarios).toFixed(2));
+        obtenerRespuesta('mensual-promedio', (obtenerPromedio(salarios) / 12).toFixed(2));
+
+        mostrarRespuestas();
+        mostrarBotonReiniciar();
+
+    } else {
+        ocultarRespuestas();
+    }
+}
 
 const $botonReiniciar = document.querySelector('#reiniciar');
 $botonReiniciar.onclick = function () {
     borrarIntegrantes();
+    borrarErroresAnteriores()
     ocultarBotonCalcular();
     ocultarRespuestas();
     ocultarBotonReiniciar();
